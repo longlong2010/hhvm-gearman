@@ -61,17 +61,47 @@ class GearmanWorkerData {
 			gearman_worker_st worker;
 		};
 
-		struct UserDefinedFunc {
-			Variant function;
-			Variant context;
-		};
 		GearmanWorkerData() {}
 		~GearmanWorkerData() {}
 
 		typedef std::shared_ptr<Impl> ImplPtr;
 		ImplPtr m_impl;
-		std::vector<std::shared_ptr<UserDefinedFunc>> m_functions;
-		//std::vector<Variant> m_functions;
+};
+
+const StaticString s_GearmanJobData("GearmanJobData");
+class GearmanJobData {
+	public:
+		class Impl {
+			public:
+			Impl() {
+			}
+			~Impl() {
+			}
+		};
+
+		GearmanJobData() {}
+		~GearmanJobData() {}
+
+		typedef std::shared_ptr<Impl> Implptr;
+		Implptr m_impl;
+};
+
+const StaticString s_GearmanTaskData("GearmanTaskData");
+class GearmanTaskData {
+	public:
+		class Impl {
+			public:
+			Impl() {
+			}
+			~Impl() {
+			}
+		};
+
+		GearmanTaskData() {}
+		~GearmanTaskData() {}
+
+		typedef std::shared_ptr<Impl> Implptr;
+		Implptr m_impl;
 };
 
 void HHVM_METHOD(GearmanClient, __construct) {
@@ -86,6 +116,12 @@ bool HHVM_METHOD(GearmanClient, addServer, String& host, int64_t port) {
 	return ret == GEARMAN_SUCCESS;
 }
 
+bool HHVM_METHOD(GearmanClient, addServers, String& servers) {
+	auto data = Native::data<GearmanClientData>(this_);
+	const char* myServers = servers.empty() ? nullptr : servers.c_str();
+	gearman_return_t ret = gearman_client_add_servers(&data->m_impl->client, myServers);
+	return ret == GEARMAN_SUCCESS;
+}
 
 #define GEARMAN_CLIENT_DO(function_name, workload, unique) \
 	auto data = Native::data<GearmanClientData>(this_); \
@@ -163,6 +199,45 @@ String HHVM_METHOD(GearmanClient, doHighBackground, const String& function_name,
 	return String(handle);
 }
 
+bool HHVM_METHOD(GearmanClient, ping, String& workload) {
+	auto data = Native::data<GearmanClientData>(this_);
+	const char* myWorkload = workload.empty() ? nullptr : workload.c_str();
+	size_t workload_size = workload.length();
+
+	gearman_return_t ret = gearman_client_echo(&data->m_impl->client, myWorkload, workload_size);
+	return ret == GEARMAN_SUCCESS;
+}
+
+bool HHVM_METHOD(GearmanClient, setTimeout, int64_t timeout) {
+	auto data = Native::data<GearmanClientData>(this_);
+	gearman_client_set_timeout(&data->m_impl->client, timeout);
+	return true;
+}
+
+Array HHVM_METHOD(GearmanClient, jobStatus, const String& job_handle) {
+	auto data = Native::data<GearmanClientData>(this_);
+	bool is_known, is_running;
+	uint32_t numerator, denominator;
+
+	gearman_return_t ret = gearman_client_job_status(&data->m_impl->client, job_handle.c_str(), 
+				&is_known, &is_running, &numerator, &denominator);
+	
+	Array status;
+	if (ret == GEARMAN_SUCCESS) {
+		status.append(is_known);
+		status.append(is_running);
+		status.append((int64_t) numerator);
+		status.append((int64_t) denominator);
+	}
+
+	return status;
+}
+
+bool HHVM_METHOD(GearmanClient, setOptions, int64_t options) {
+	//auto data = Native::data<GearmanClientData>(this_);
+	return true;
+}
+
 void HHVM_METHOD(GearmanWorker, __construct) {
 	auto data = Native::data<GearmanWorkerData>(this_);
 	data->m_impl.reset(new GearmanWorkerData::Impl);
@@ -175,39 +250,73 @@ bool HHVM_METHOD(GearmanWorker, addServer, String& host, int64_t port) {
 	return ret == GEARMAN_SUCCESS;
 }
 
-static void* add_function_callback(gearman_job_st* job, void* context, size_t* result_size, gearman_return_t* ret) {
-	GearmanWorkerData::UserDefinedFunc* callback = (GearmanWorkerData::UserDefinedFunc*) context;
+bool HHVM_METHOD(GearmanWorker, addServers, String& servers) {
+	auto data = Native::data<GearmanWorkerData>(this_);
+	const char* myServers = servers.empty() ? nullptr : servers.c_str();
+	gearman_return_t ret = gearman_worker_add_servers(&data->m_impl->worker, myServers);
+	return ret == GEARMAN_SUCCESS;
+}
+
+struct Callback {
+	Variant function;
+};
+
+void* add_function_callback(gearman_job_st* job, void* context, size_t* result_size, gearman_return_t* ret) {
+	//GearmanWorkerData::UserDefinedFunc* callback = (GearmanWorkerData::UserDefinedFunc*) context;
 	//Array params(PackedArrayInit(1).appendRef(callback->context).toArray());
 	Array params = Array::Create();
-	f_is_callable(callback->function);
-	//vm_call_user_func(callback->function, params);
+	Callback* cb = (Callback*) context;
+	vm_call_user_func(cb->function, params);
 	*result_size = 0;
 	return NULL;
 }
 
-bool HHVM_METHOD(GearmanWorker, addFunction, String function_name, const Variant& function, VRefParam context, int64_t timeout) {
+
+
+bool HHVM_METHOD(GearmanWorker, addFunction, const String& function_name, 
+					const Variant& function, VRefParam context, int64_t timeout /* = 0 */) {
 	auto data = Native::data<GearmanWorkerData>(this_);
-	const char* functionName = function_name.empty() ? nullptr : function_name.c_str();
+	if (function_name.empty()) {
+		return false;
+	}
 	if (!f_is_callable(function)) {
 		raise_warning("Not a valid callback function %s",
 				function.toString().data());
 		return false;
 	}
+
+	struct Callback* cb = new Callback();
+	cb->function = function;
+	gearman_return_t ret = gearman_worker_add_function(&data->m_impl->worker, function_name.data(), 
+									timeout, add_function_callback, cb);
 	
-	auto callback = std::make_shared<GearmanWorkerData::UserDefinedFunc>();
-	gearman_return_t ret = gearman_worker_add_function(&data->m_impl->worker, functionName, timeout, add_function_callback, callback.get());
 	if (ret == GEARMAN_SUCCESS) {
-		callback->function = function;
-		data->m_functions.push_back(callback);
 		return true;
 	}
 	return false;
 }
 
+bool HHVM_METHOD(GearmanWorker, setTimeout, int64_t timeout) {
+	auto data = Native::data<GearmanWorkerData>(this_);
+	gearman_worker_set_timeout(&data->m_impl->worker, timeout);
+	return true;
+}
+
+
 bool HHVM_METHOD(GearmanWorker, work) {
 	auto data = Native::data<GearmanWorkerData>(this_);
 	gearman_return_t ret = gearman_worker_work(&data->m_impl->worker);
 	return ret == GEARMAN_SUCCESS;
+}
+
+void HHVM_METHOD(GearmanJob, __construct) {
+	auto data = Native::data<GearmanJobData>(this_);
+	data->m_impl.reset(new GearmanJobData::Impl);
+}
+
+void HHVM_METHOD(GearmanTask, __construct) {
+	auto data = Native::data<GearmanTaskData>(this_);
+	data->m_impl.reset(new GearmanTaskData::Impl);
 }
 
 static class GearmanExtension : public Extension {
@@ -219,15 +328,28 @@ static class GearmanExtension : public Extension {
 			HHVM_ME(GearmanClient, doHigh);
 			HHVM_ME(GearmanClient, doBackground);
 			HHVM_ME(GearmanClient, doHighBackground);
+			HHVM_ME(GearmanClient, ping);
 			HHVM_ME(GearmanClient, addServer);
+			HHVM_ME(GearmanClient, addServers);
+			HHVM_ME(GearmanClient, setTimeout);
+			HHVM_ME(GearmanClient, jobStatus);
+			HHVM_ME(GearmanClient, setOptions);
 
 			HHVM_ME(GearmanWorker, __construct);
 			HHVM_ME(GearmanWorker, work);
 			HHVM_ME(GearmanWorker, addServer);
+			HHVM_ME(GearmanWorker, addServers);
 			HHVM_ME(GearmanWorker, addFunction);
+			HHVM_ME(GearmanWorker, setTimeout);
+
+			HHVM_ME(GearmanJob, __construct);
+			
+			HHVM_ME(GearmanTask, __construct);
 
 			Native::registerNativeDataInfo<GearmanClientData>(s_GearmanClientData.get());
 			Native::registerNativeDataInfo<GearmanWorkerData>(s_GearmanWorkerData.get());
+			Native::registerNativeDataInfo<GearmanJobData>(s_GearmanJobData.get());
+			Native::registerNativeDataInfo<GearmanTaskData>(s_GearmanTaskData.get());
 			loadSystemlib();
 		}
 } s_gearman_extension;
