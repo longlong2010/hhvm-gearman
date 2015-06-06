@@ -19,6 +19,8 @@
 #include "hphp/runtime/vm/runtime.h"
 #include "hphp/runtime/base/array-init.h"
 #include "hphp/runtime/ext/std/ext_std_function.h"
+#include "hphp/system/systemlib.h"
+
 #include <vector>
 #include <memory>
 #include <gearman.h>
@@ -61,10 +63,15 @@ class GearmanWorkerData {
 			gearman_worker_st worker;
 		};
 
+		struct UserDefinedFunc {
+			Variant func;
+		};
+
 		GearmanWorkerData() {}
 		~GearmanWorkerData() {}
 
 		typedef std::shared_ptr<Impl> ImplPtr;
+		std::vector<std::shared_ptr<UserDefinedFunc>> m_udfs;
 		ImplPtr m_impl;
 };
 
@@ -95,6 +102,7 @@ class GearmanTaskData {
 			}
 			~Impl() {
 			}
+			gearman_task_st task;
 		};
 
 		GearmanTaskData() {}
@@ -257,21 +265,18 @@ bool HHVM_METHOD(GearmanWorker, addServers, String& servers) {
 	return ret == GEARMAN_SUCCESS;
 }
 
-struct Callback {
-	Variant function;
-};
-
 void* add_function_callback(gearman_job_st* job, void* context, size_t* result_size, gearman_return_t* ret) {
-	//GearmanWorkerData::UserDefinedFunc* callback = (GearmanWorkerData::UserDefinedFunc*) context;
 	//Array params(PackedArrayInit(1).appendRef(callback->context).toArray());
-	Array params = Array::Create();
-	Callback* cb = (Callback*) context;
-	vm_call_user_func(cb->function, params);
+	//Array params = Array::Create();
+	//vm_call_user_func(cb->function, params);
+	//GearmanWorkerData* data = (GearmanWorkerData*) context;
+	GearmanWorkerData::UserDefinedFunc* udf = (GearmanWorkerData::UserDefinedFunc*) context;
+	f_is_callable(udf->func);
+	//Array params = Array::Create();
+	//vm_call_user_func(callback->func, params);
 	*result_size = 0;
 	return NULL;
 }
-
-
 
 bool HHVM_METHOD(GearmanWorker, addFunction, const String& function_name, 
 					const Variant& function, VRefParam context, int64_t timeout /* = 0 */) {
@@ -285,12 +290,14 @@ bool HHVM_METHOD(GearmanWorker, addFunction, const String& function_name,
 		return false;
 	}
 
-	struct Callback* cb = new Callback();
-	cb->function = function;
+	auto udf = std::make_shared<GearmanWorkerData::UserDefinedFunc>();
+
 	gearman_return_t ret = gearman_worker_add_function(&data->m_impl->worker, function_name.data(), 
-									timeout, add_function_callback, cb);
+									timeout, add_function_callback, udf.get());
 	
 	if (ret == GEARMAN_SUCCESS) {
+		udf->func = function;
+		data->m_udfs.push_back(udf);
 		return true;
 	}
 	return false;
@@ -319,6 +326,18 @@ void HHVM_METHOD(GearmanTask, __construct) {
 	data->m_impl.reset(new GearmanTaskData::Impl);
 }
 
+String HHVM_METHOD(GearmanTask, data) {
+	auto data = Native::data<GearmanTaskData>(this_);
+	char* result = (char*) gearman_task_data(&data->m_impl->task);
+	size_t result_len = gearman_task_data_size(&data->m_impl->task);
+	return String(result, result_len, CopyString);
+}
+
+int64_t HHVM_METHOD(GearmanTask, dataSize) {
+	auto data = Native::data<GearmanTaskData>(this_);
+	return gearman_task_data_size(&data->m_impl->task);
+}
+
 static class GearmanExtension : public Extension {
 	public:
 		GearmanExtension() : Extension("gearman") {}
@@ -345,9 +364,11 @@ static class GearmanExtension : public Extension {
 			HHVM_ME(GearmanJob, __construct);
 			
 			HHVM_ME(GearmanTask, __construct);
+			HHVM_ME(GearmanTask, data);
+			HHVM_ME(GearmanTask, dataSize);
 
 			Native::registerNativeDataInfo<GearmanClientData>(s_GearmanClientData.get());
-			Native::registerNativeDataInfo<GearmanWorkerData>(s_GearmanWorkerData.get());
+			Native::registerNativeDataInfo<GearmanWorkerData>(s_GearmanWorkerData.get(), Native::NDIFlags::NO_SWEEP);
 			Native::registerNativeDataInfo<GearmanJobData>(s_GearmanJobData.get());
 			Native::registerNativeDataInfo<GearmanTaskData>(s_GearmanTaskData.get());
 			loadSystemlib();
