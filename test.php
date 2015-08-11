@@ -7,9 +7,11 @@ var_dump($c->jobStatus($h));
 //exit;
 $w = new GearmanWorker();
 $w->addServer('127.0.0.1');
-var_dump($w->addFunction('abc', function() {
-	echo "123\n";
-}, $ctx, 0));
+
+$f = function() {
+	echo 123;
+};
+var_dump($w->addFunction('abc', $f, $ctx, 0));
 while (true) {
 	$w->work();
 }

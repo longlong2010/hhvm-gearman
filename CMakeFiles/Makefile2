@@ -47,10 +47,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/longlong/extension-gearman
+CMAKE_SOURCE_DIR = /home/longlong/hhvm-gearman
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/longlong/extension-gearman
+CMAKE_BINARY_DIR = /home/longlong/hhvm-gearman
 
 #=============================================================================
 # Target rules for target CMakeFiles/gearman.dir
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/longlong/extension-gearman
 CMakeFiles/gearman.dir/all:
 	$(MAKE) -f CMakeFiles/gearman.dir/build.make CMakeFiles/gearman.dir/depend
 	$(MAKE) -f CMakeFiles/gearman.dir/build.make CMakeFiles/gearman.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/longlong/extension-gearman/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/longlong/hhvm-gearman/CMakeFiles  1
 	@echo "Built target gearman"
 .PHONY : CMakeFiles/gearman.dir/all
 
@@ -69,23 +69,14 @@ all: CMakeFiles/gearman.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/gearman.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/longlong/extension-gearman/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/longlong/hhvm-gearman/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/gearman.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/longlong/extension-gearman/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/longlong/hhvm-gearman/CMakeFiles 0
 .PHONY : CMakeFiles/gearman.dir/rule
 
 # Convenience name for target.
 gearman: CMakeFiles/gearman.dir/rule
 .PHONY : gearman
-
-# Pre-install relink rule for target.
-CMakeFiles/gearman.dir/preinstall:
-	$(MAKE) -f CMakeFiles/gearman.dir/build.make CMakeFiles/gearman.dir/preinstall
-.PHONY : CMakeFiles/gearman.dir/preinstall
-
-# Prepare target for install.
-preinstall: CMakeFiles/gearman.dir/preinstall
-.PHONY : preinstall
 
 # clean rule for target.
 CMakeFiles/gearman.dir/clean:

@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/longlong/extension-gearman
+CMAKE_SOURCE_DIR = /home/longlong/hhvm-gearman
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/longlong/extension-gearman
+CMAKE_BINARY_DIR = /home/longlong/hhvm-gearman
 
 # Include any dependencies generated for this target.
 include CMakeFiles/gearman.dir/depend.make
@@ -51,17 +51,17 @@ include CMakeFiles/gearman.dir/flags.make
 
 CMakeFiles/gearman.dir/gearman.cpp.o: CMakeFiles/gearman.dir/flags.make
 CMakeFiles/gearman.dir/gearman.cpp.o: gearman.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/longlong/extension-gearman/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/longlong/hhvm-gearman/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/gearman.dir/gearman.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gearman.dir/gearman.cpp.o -c /home/longlong/extension-gearman/gearman.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gearman.dir/gearman.cpp.o -c /home/longlong/hhvm-gearman/gearman.cpp
 
 CMakeFiles/gearman.dir/gearman.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gearman.dir/gearman.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/longlong/extension-gearman/gearman.cpp > CMakeFiles/gearman.dir/gearman.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/longlong/hhvm-gearman/gearman.cpp > CMakeFiles/gearman.dir/gearman.cpp.i
 
 CMakeFiles/gearman.dir/gearman.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gearman.dir/gearman.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/longlong/extension-gearman/gearman.cpp -o CMakeFiles/gearman.dir/gearman.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/longlong/hhvm-gearman/gearman.cpp -o CMakeFiles/gearman.dir/gearman.cpp.s
 
 CMakeFiles/gearman.dir/gearman.cpp.o.requires:
 .PHONY : CMakeFiles/gearman.dir/gearman.cpp.o.requires
@@ -81,7 +81,7 @@ gearman_EXTERNAL_OBJECTS =
 
 gearman.so: CMakeFiles/gearman.dir/gearman.cpp.o
 gearman.so: CMakeFiles/gearman.dir/build.make
-gearman.so: /usr/local/lib/libgearman.so
+gearman.so: /usr/lib/x86_64-linux-gnu/libgearman.so
 gearman.so: ext_gearman.php
 gearman.so: CMakeFiles/gearman.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library gearman.so"
@@ -93,25 +93,6 @@ gearman.so: CMakeFiles/gearman.dir/link.txt
 CMakeFiles/gearman.dir/build: gearman.so
 .PHONY : CMakeFiles/gearman.dir/build
 
-# Object files for target gearman
-gearman_OBJECTS = \
-"CMakeFiles/gearman.dir/gearman.cpp.o"
-
-# External object files for target gearman
-gearman_EXTERNAL_OBJECTS =
-
-CMakeFiles/CMakeRelink.dir/gearman.so: CMakeFiles/gearman.dir/gearman.cpp.o
-CMakeFiles/CMakeRelink.dir/gearman.so: CMakeFiles/gearman.dir/build.make
-CMakeFiles/CMakeRelink.dir/gearman.so: /usr/local/lib/libgearman.so
-CMakeFiles/CMakeRelink.dir/gearman.so: ext_gearman.php
-CMakeFiles/CMakeRelink.dir/gearman.so: CMakeFiles/gearman.dir/relink.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library CMakeFiles/CMakeRelink.dir/gearman.so"
-	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gearman.dir/relink.txt --verbose=$(VERBOSE)
-
-# Rule to relink during preinstall.
-CMakeFiles/gearman.dir/preinstall: CMakeFiles/CMakeRelink.dir/gearman.so
-.PHONY : CMakeFiles/gearman.dir/preinstall
-
 CMakeFiles/gearman.dir/requires: CMakeFiles/gearman.dir/gearman.cpp.o.requires
 .PHONY : CMakeFiles/gearman.dir/requires
 
@@ -120,6 +101,6 @@ CMakeFiles/gearman.dir/clean:
 .PHONY : CMakeFiles/gearman.dir/clean
 
 CMakeFiles/gearman.dir/depend:
-	cd /home/longlong/extension-gearman && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/longlong/extension-gearman /home/longlong/extension-gearman /home/longlong/extension-gearman /home/longlong/extension-gearman /home/longlong/extension-gearman/CMakeFiles/gearman.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/longlong/hhvm-gearman && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/longlong/hhvm-gearman /home/longlong/hhvm-gearman /home/longlong/hhvm-gearman /home/longlong/hhvm-gearman /home/longlong/hhvm-gearman/CMakeFiles/gearman.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/gearman.dir/depend
 

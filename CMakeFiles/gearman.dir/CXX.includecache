@@ -6,11 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/home/longlong/extension-gearman/gearman.cpp
+/home/longlong/hhvm-gearman/gearman.cpp
 hphp/runtime/base/base-includes.h
-/home/longlong/extension-gearman/hphp/runtime/base/base-includes.h
+/home/longlong/hhvm-gearman/hphp/runtime/base/base-includes.h
 hphp/runtime/vm/native-data.h
-/home/longlong/extension-gearman/hphp/runtime/vm/native-data.h
+/home/longlong/hhvm-gearman/hphp/runtime/vm/native-data.h
+hphp/runtime/vm/runtime.h
+/home/longlong/hhvm-gearman/hphp/runtime/vm/runtime.h
+hphp/runtime/base/array-init.h
+/home/longlong/hhvm-gearman/hphp/runtime/base/array-init.h
+hphp/runtime/ext/std/ext_std_function.h
+/home/longlong/hhvm-gearman/hphp/runtime/ext/std/ext_std_function.h
+hphp/system/systemlib.h
+/home/longlong/hhvm-gearman/hphp/system/systemlib.h
+vector
+-
+memory
+-
 gearman.h
 -
 
@@ -249,6 +261,10 @@ hphp/runtime/base/mixed-array.h
 /usr/local/include/hphp/runtime/base/hphp/runtime/base/mixed-array.h
 hphp/runtime/base/packed-array.h
 /usr/local/include/hphp/runtime/base/hphp/runtime/base/packed-array.h
+hphp/runtime/base/runtime-option.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/base/runtime-option.h
+hphp/runtime/base/thread-info.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/base/thread-info.h
 
 /usr/local/include/hphp/runtime/base/array-iterator.h
 array
@@ -389,16 +405,18 @@ hphp/util/atomic.h
 /usr/local/include/hphp/runtime/base/datatype.h
 cstdint
 -
-string
--
 cstdio
 -
+string
+-
 folly/Format.h
-/usr/local/include/hphp/runtime/base/folly/Format.h
-hphp/util/portability.h
-/usr/local/include/hphp/runtime/base/hphp/util/portability.h
+-
+folly/Optional.h
+-
 hphp/util/assertions.h
 /usr/local/include/hphp/runtime/base/hphp/util/assertions.h
+hphp/util/portability.h
+/usr/local/include/hphp/runtime/base/hphp/util/portability.h
 
 /usr/local/include/hphp/runtime/base/debuggable.h
 hphp/runtime/base/type-string.h
@@ -559,6 +577,8 @@ vector
 -
 utility
 -
+set
+-
 folly/Memory.h
 /usr/local/include/hphp/runtime/base/folly/Memory.h
 hphp/util/alloc.h
@@ -630,6 +650,18 @@ hphp/runtime/base/execution-context.h
 hphp/runtime/base/request-event-handler.h
 /usr/local/include/hphp/runtime/base/hphp/runtime/base/request-event-handler.h
 
+/usr/local/include/hphp/runtime/base/rds-header.h
+atomic
+-
+cstddef
+-
+hphp/runtime/base/rds.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/base/rds.h
+hphp/runtime/base/types.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/base/types.h
+hphp/runtime/vm/bytecode.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/vm/bytecode.h
+
 /usr/local/include/hphp/runtime/base/rds-inl.h
 
 /usr/local/include/hphp/runtime/base/rds-util.h
@@ -669,12 +701,32 @@ folly/Optional.h
 /usr/local/include/hphp/runtime/base/folly/Optional.h
 hphp/util/assertions.h
 /usr/local/include/hphp/runtime/base/hphp/util/assertions.h
-hphp/util/compact-sized-ptr.h
-/usr/local/include/hphp/runtime/base/hphp/util/compact-sized-ptr.h
+hphp/util/compact-tagged-ptrs.h
+/usr/local/include/hphp/runtime/base/hphp/util/compact-tagged-ptrs.h
 hphp/runtime/base/datatype.h
 /usr/local/include/hphp/runtime/base/hphp/runtime/base/datatype.h
 
 /usr/local/include/hphp/runtime/base/request-event-handler.h
+
+/usr/local/include/hphp/runtime/base/request-injection-data.h
+hphp/runtime/vm/pc-filter.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/vm/pc-filter.h
+cinttypes
+-
+cstdlib
+-
+vector
+-
+atomic
+-
+string
+-
+stack
+-
+cassert
+-
+cstddef
+-
 
 /usr/local/include/hphp/runtime/base/request-local.h
 hphp/runtime/base/execution-context.h
@@ -792,6 +844,18 @@ hphp/util/slice.h
 string
 -
 
+/usr/local/include/hphp/runtime/base/stats.h
+atomic
+-
+hphp/runtime/vm/hhbc.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/vm/hhbc.h
+hphp/util/data-block.h
+/usr/local/include/hphp/runtime/base/hphp/util/data-block.h
+hphp/util/trace.h
+/usr/local/include/hphp/runtime/base/hphp/util/trace.h
+hphp/runtime/vm/stats-opcodeDef.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/vm/stats-opcodeDef.h
+
 /usr/local/include/hphp/runtime/base/string-buffer.h
 hphp/runtime/base/exceptions.h
 /usr/local/include/hphp/runtime/base/hphp/runtime/base/exceptions.h
@@ -837,6 +901,20 @@ cstdint
 /usr/local/include/hphp/runtime/base/strings.h
 
 /usr/local/include/hphp/runtime/base/sweepable.h
+
+/usr/local/include/hphp/runtime/base/thread-info.h
+cinttypes
+-
+map
+-
+functional
+-
+hphp/util/portability.h
+/usr/local/include/hphp/runtime/base/hphp/util/portability.h
+hphp/util/thread-local.h
+/usr/local/include/hphp/runtime/base/hphp/util/thread-local.h
+hphp/runtime/base/request-injection-data.h
+/usr/local/include/hphp/runtime/base/hphp/runtime/base/request-injection-data.h
 
 /usr/local/include/hphp/runtime/base/tv-arith.h
 hphp/runtime/base/complex-types.h
@@ -1009,6 +1087,12 @@ hphp/runtime/base/memory-manager.h
 /usr/local/include/hphp/runtime/base/hphp/runtime/base/memory-manager.h
 
 /usr/local/include/hphp/runtime/base/user-attributes.h
+cstdlib
+-
+utility
+-
+hphp/util/copy-ptr.h
+/usr/local/include/hphp/runtime/base/hphp/util/copy-ptr.h
 hphp/runtime/base/types.h
 /usr/local/include/hphp/runtime/base/hphp/runtime/base/types.h
 hphp/runtime/base/string-data.h
@@ -1032,6 +1116,126 @@ hphp/util/hash.h
 hphp/util/slice.h
 /usr/local/include/hphp/runtime/base/hphp/util/slice.h
 
+/usr/local/include/hphp/runtime/ext/asio/asio_blockable.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/base/type-array.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/type-array.h
+hphp/runtime/ext/asio/asio_context.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/asio_context.h
+
+/usr/local/include/hphp/runtime/ext/asio/asio_context-inl.h
+
+/usr/local/include/hphp/runtime/ext/asio/asio_context.h
+functional
+-
+queue
+-
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/base/smart-containers.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/smart-containers.h
+hphp/runtime/ext/asio/asio_context-inl.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/asio_context-inl.h
+
+/usr/local/include/hphp/runtime/ext/asio/asio_external_thread_event_queue.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+atomic
+-
+condition_variable
+-
+mutex
+-
+
+/usr/local/include/hphp/runtime/ext/asio/asio_session.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/asio/asio_context.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/asio_context.h
+hphp/runtime/ext/asio/asio_external_thread_event_queue.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/asio_external_thread_event_queue.h
+hphp/runtime/ext/ext_closure.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/ext_closure.h
+
+/usr/local/include/hphp/runtime/ext/asio/async_function_wait_handle.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/asio/resumable_wait_handle.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/resumable_wait_handle.h
+hphp/runtime/vm/bytecode.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/vm/bytecode.h
+hphp/runtime/vm/resumable.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/vm/resumable.h
+hphp/runtime/vm/jit/types.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/vm/jit/types.h
+
+/usr/local/include/hphp/runtime/ext/asio/async_generator.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/ext_generator.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/ext_generator.h
+hphp/runtime/vm/resumable.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/vm/resumable.h
+hphp/runtime/vm/jit/types.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/vm/jit/types.h
+hphp/system/systemlib.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/system/systemlib.h
+
+/usr/local/include/hphp/runtime/ext/asio/blockable_wait_handle-inl.h
+
+/usr/local/include/hphp/runtime/ext/asio/blockable_wait_handle.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/asio/asio_blockable.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/asio_blockable.h
+hphp/runtime/ext/asio/waitable_wait_handle.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/waitable_wait_handle.h
+hphp/runtime/ext/asio/blockable_wait_handle-inl.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/blockable_wait_handle-inl.h
+
+/usr/local/include/hphp/runtime/ext/asio/resumable_wait_handle.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/asio/blockable_wait_handle.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/blockable_wait_handle.h
+
+/usr/local/include/hphp/runtime/ext/asio/wait_handle.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/asio/asio_blockable.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/asio_blockable.h
+
+/usr/local/include/hphp/runtime/ext/asio/waitable_wait_handle-inl.h
+
+/usr/local/include/hphp/runtime/ext/asio/waitable_wait_handle.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/asio/wait_handle.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/wait_handle.h
+hphp/runtime/ext/asio/asio_session.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/asio_session.h
+hphp/runtime/ext/asio/waitable_wait_handle-inl.h
+/usr/local/include/hphp/runtime/ext/asio/hphp/runtime/ext/asio/waitable_wait_handle-inl.h
+
+/usr/local/include/hphp/runtime/ext/ext_closure.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/hphp/runtime/base/base-includes.h
+hphp/runtime/base/macros.h
+/usr/local/include/hphp/runtime/ext/hphp/runtime/base/macros.h
+hphp/runtime/vm/func.h
+/usr/local/include/hphp/runtime/ext/hphp/runtime/vm/func.h
+
+/usr/local/include/hphp/runtime/ext/ext_generator.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/hphp/runtime/base/base-includes.h
+hphp/runtime/vm/resumable.h
+/usr/local/include/hphp/runtime/ext/hphp/runtime/vm/resumable.h
+hphp/runtime/vm/jit/types.h
+/usr/local/include/hphp/runtime/ext/hphp/runtime/vm/jit/types.h
+hphp/system/systemlib.h
+/usr/local/include/hphp/runtime/ext/hphp/system/systemlib.h
+
 /usr/local/include/hphp/runtime/ext/extension.h
 hphp/runtime/base/complex-types.h
 /usr/local/include/hphp/runtime/ext/hphp/runtime/base/complex-types.h
@@ -1049,6 +1253,20 @@ set
 -
 string
 -
+
+/usr/local/include/hphp/runtime/ext/std/ext_std.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/std/hphp/runtime/base/base-includes.h
+
+/usr/local/include/hphp/runtime/ext/std/ext_std_errorfunc.h
+hphp/runtime/ext/std/ext_std.h
+/usr/local/include/hphp/runtime/ext/std/hphp/runtime/ext/std/ext_std.h
+
+/usr/local/include/hphp/runtime/ext/std/ext_std_function.h
+hphp/runtime/base/base-includes.h
+/usr/local/include/hphp/runtime/ext/std/hphp/runtime/base/base-includes.h
+hphp/runtime/ext/std/ext_std.h
+/usr/local/include/hphp/runtime/ext/std/hphp/runtime/ext/std/ext_std.h
 
 /usr/local/include/hphp/runtime/server/ip-block-map.h
 hphp/util/hdf.h
@@ -1129,6 +1347,8 @@ hphp/runtime/base/types.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/base/types.h
 hphp/runtime/base/attr.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/base/attr.h
+hphp/runtime/base/datatype.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/datatype.h
 hphp/runtime/base/rds.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/base/rds.h
 hphp/runtime/base/repo-auth-type.h
@@ -1147,6 +1367,8 @@ hphp/runtime/vm/instance-bits.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/vm/instance-bits.h
 hphp/runtime/vm/preclass.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/vm/preclass.h
+hphp/util/default-ptr.h
+/usr/local/include/hphp/runtime/vm/hphp/util/default-ptr.h
 boost/range/iterator_range.hpp
 -
 list
@@ -1159,6 +1381,20 @@ vector
 -
 hphp/runtime/vm/class-inl.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/vm/class-inl.h
+
+/usr/local/include/hphp/runtime/vm/event-hook.h
+hphp/util/ringbuffer.h
+/usr/local/include/hphp/runtime/vm/hphp/util/ringbuffer.h
+hphp/runtime/base/execution-context.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/execution-context.h
+hphp/runtime/vm/bytecode.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/bytecode.h
+hphp/runtime/base/rds.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/rds.h
+hphp/runtime/base/rds-header.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/rds-header.h
+atomic
+-
 
 /usr/local/include/hphp/runtime/vm/fixed-string-map.h
 cstdint
@@ -1213,14 +1449,12 @@ hphp/runtime/base/typed-value.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/base/typed-value.h
 
 /usr/local/include/hphp/runtime/vm/indexed-string-map.h
-boost/mpl/if.hpp
--
-boost/utility/enable_if.hpp
--
 hphp/runtime/base/string-data.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/base/string-data.h
 hphp/runtime/vm/fixed-string-map.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/vm/fixed-string-map.h
+boost/range/iterator_range.hpp
+-
 
 /usr/local/include/hphp/runtime/vm/instance-bits.h
 bitset
@@ -1231,6 +1465,16 @@ cinttypes
 -
 hphp/util/mutex.h
 /usr/local/include/hphp/runtime/vm/hphp/util/mutex.h
+
+/usr/local/include/hphp/runtime/vm/jit/types.h
+vector
+-
+hphp/util/assertions.h
+/usr/local/include/hphp/runtime/vm/jit/hphp/util/assertions.h
+hphp/util/hash-map-typedefs.h
+/usr/local/include/hphp/runtime/vm/jit/hphp/util/hash-map-typedefs.h
+hphp/runtime/base/types.h
+/usr/local/include/hphp/runtime/vm/jit/hphp/runtime/base/types.h
 
 /usr/local/include/hphp/runtime/vm/litstr-table-inl.h
 
@@ -1340,7 +1584,47 @@ type_traits
 hphp/runtime/vm/preclass-inl.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/vm/preclass-inl.h
 
+/usr/local/include/hphp/runtime/vm/resumable.h
+hphp/runtime/vm/bytecode.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/bytecode.h
+hphp/runtime/vm/func.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/func.h
+hphp/runtime/vm/jit/types.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/jit/types.h
+
+/usr/local/include/hphp/runtime/vm/runtime.h
+hphp/runtime/ext/ext_generator.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/ext/ext_generator.h
+hphp/runtime/ext/asio/async_function_wait_handle.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/ext/asio/async_function_wait_handle.h
+hphp/runtime/ext/asio/async_generator.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/ext/asio/async_generator.h
+hphp/runtime/ext/std/ext_std_errorfunc.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/ext/std/ext_std_errorfunc.h
+hphp/runtime/vm/event-hook.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/event-hook.h
+hphp/runtime/vm/func.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/func.h
+hphp/runtime/vm/resumable.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/resumable.h
+hphp/runtime/base/builtin-functions.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/builtin-functions.h
+hphp/runtime/base/stats.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/stats.h
+
+/usr/local/include/hphp/runtime/vm/stats-opcodeDef.h
+
+/usr/local/include/hphp/runtime/vm/type-alias-inl.h
+
 /usr/local/include/hphp/runtime/vm/type-alias.h
+hphp/runtime/base/types.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/types.h
+hphp/runtime/base/attr.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/attr.h
+hphp/runtime/base/datatype.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/datatype.h
+hphp/runtime/vm/type-alias-inl.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/vm/type-alias-inl.h
 
 /usr/local/include/hphp/runtime/vm/type-constraint.h
 hphp/runtime/vm/named-entity.h
@@ -1357,6 +1641,8 @@ string
 /usr/local/include/hphp/runtime/vm/type-profile.h
 hphp/runtime/base/types.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/base/types.h
+hphp/runtime/base/datatype.h
+/usr/local/include/hphp/runtime/vm/hphp/runtime/base/datatype.h
 hphp/runtime/vm/hhbc.h
 /usr/local/include/hphp/runtime/vm/hphp/runtime/vm/hhbc.h
 
@@ -1445,8 +1731,8 @@ folly/Hash.h
 -
 folly/ThreadCachedInt.h
 -
-AtomicHashArray-inl.h
-/usr/local/include/hphp/third-party/folly/AtomicHashArray-inl.h
+folly/AtomicHashArray-inl.h
+-
 
 /usr/local/include/hphp/third-party/folly/AtomicHashMap-inl.h
 folly/detail/AtomicHashUtils.h
@@ -1475,12 +1761,10 @@ folly/Likely.h
 -
 folly/ThreadCachedInt.h
 -
-AtomicHashMap-inl.h
-/usr/local/include/hphp/third-party/folly/AtomicHashMap-inl.h
+folly/AtomicHashMap-inl.h
+-
 
 /usr/local/include/hphp/third-party/folly/Bits.h
-folly/Portability.h
--
 folly/Portability.h
 -
 folly/detail/BitsDetail.h
@@ -1520,6 +1804,8 @@ folly/Preprocessor.h
 folly/Range.h
 -
 boost/implicit_cast.hpp
+-
+algorithm
 -
 type_traits
 -
@@ -1757,13 +2043,13 @@ utility
 -
 
 /usr/local/include/hphp/third-party/folly/Optional.h
-utility
--
 cassert
 -
 cstddef
 -
 type_traits
+-
+utility
 -
 boost/operators.hpp
 -
@@ -1771,12 +2057,12 @@ folly/Portability.h
 -
 
 /usr/local/include/hphp/third-party/folly/Portability.h
-folly-config.h
-/usr/local/include/hphp/third-party/folly/folly-config.h
+folly/folly-config.h
+-
 features.h
 -
-CPortability.h
-/usr/local/include/hphp/third-party/folly/CPortability.h
+folly/CPortability.h
+-
 sched.h
 -
 sys/mman.h
@@ -1798,6 +2084,8 @@ type_traits
 boost/type_traits.hpp
 -
 basetsd.h
+-
+TargetConditionals.h
 -
 
 /usr/local/include/hphp/third-party/folly/Preprocessor.h
@@ -2093,8 +2381,8 @@ folly/FBVector.h
 -
 
 /usr/local/include/hphp/third-party/folly/small_vector.h
-Portability.h
-/usr/local/include/hphp/third-party/folly/Portability.h
+folly/Portability.h
+-
 stdexcept
 -
 cstdlib
@@ -2136,7 +2424,7 @@ boost/mpl/max.hpp
 folly/Malloc.h
 -
 folly/SmallLocks.h
-/usr/local/include/hphp/third-party/folly/folly/SmallLocks.h
+-
 
 /usr/local/include/hphp/util/alloc.h
 stdint.h
@@ -2187,13 +2475,13 @@ functional
 -
 string
 -
+folly/Format.h
+-
 
 /usr/local/include/hphp/util/atomic.h
 stdint.h
 -
-boost/type_traits/is_arithmetic.hpp
--
-boost/type_traits/is_pointer.hpp
+type_traits
 -
 hphp/util/assertions.h
 /usr/local/include/hphp/util/hphp/util/assertions.h
@@ -2204,7 +2492,9 @@ cstdint
 arpa/inet.h
 -
 
-/usr/local/include/hphp/util/compact-sized-ptr.h
+/usr/local/include/hphp/util/compact-tagged-ptrs.h
+cstdint
+-
 
 /usr/local/include/hphp/util/compatibility.h
 cstdint
@@ -2220,6 +2510,32 @@ hphp/util/portability.h
 
 /usr/local/include/hphp/util/compression.h
 zlib.h
+-
+
+/usr/local/include/hphp/util/copy-ptr.h
+utility
+-
+memory
+-
+
+/usr/local/include/hphp/util/data-block.h
+cstdint
+-
+cstring
+-
+sys/mman.h
+-
+folly/Bits.h
+/usr/local/include/hphp/util/folly/Bits.h
+folly/Format.h
+/usr/local/include/hphp/util/folly/Format.h
+hphp/util/assertions.h
+/usr/local/include/hphp/util/hphp/util/assertions.h
+
+/usr/local/include/hphp/util/default-ptr.h
+cstddef
+-
+utility
 -
 
 /usr/local/include/hphp/util/exception.h
@@ -2243,8 +2559,8 @@ stdexcept
 -
 hphp/util/assertions.h
 /usr/local/include/hphp/util/hphp/util/assertions.h
-hphp/util/compact-sized-ptr.h
-/usr/local/include/hphp/util/hphp/util/compact-sized-ptr.h
+hphp/util/compact-tagged-ptrs.h
+/usr/local/include/hphp/util/hphp/util/compact-tagged-ptrs.h
 
 /usr/local/include/hphp/util/functional.h
 cstring
@@ -2335,9 +2651,7 @@ hphp/util/byte-order.h
 /usr/local/include/hphp/util/hphp/util/byte-order.h
 
 /usr/local/include/hphp/util/meta.h
-boost/type_traits.hpp
--
-boost/mpl/if.hpp
+type_traits
 -
 
 /usr/local/include/hphp/util/mutex.h
@@ -2373,6 +2687,18 @@ hphp/util/meta.h
 /usr/local/include/hphp/util/rank.h
 limits.h
 -
+
+/usr/local/include/hphp/util/ringbuffer.h
+cstdlib
+-
+cstdarg
+-
+cinttypes
+-
+atomic
+-
+hphp/util/portability.h
+/usr/local/include/hphp/util/hphp/util/portability.h
 
 /usr/local/include/hphp/util/shm-counter.h
 string.h
@@ -2455,8 +2781,8 @@ hphp/util/alloc.h
 /usr/local/include/hphp/util/hphp/util/alloc.h
 hphp/util/assertions.h
 /usr/local/include/hphp/util/hphp/util/assertions.h
-hphp/util/compact-sized-ptr.h
-/usr/local/include/hphp/util/hphp/util/compact-sized-ptr.h
+hphp/util/compact-tagged-ptrs.h
+/usr/local/include/hphp/util/hphp/util/compact-tagged-ptrs.h
 
 /usr/local/include/hphp/util/tls-pod-bag.h
 cstdint

@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/longlong/extension-gearman/gearman.cpp" "/home/longlong/extension-gearman/CMakeFiles/gearman.dir/gearman.cpp.o"
+  "/home/longlong/hhvm-gearman/gearman.cpp" "/home/longlong/hhvm-gearman/CMakeFiles/gearman.dir/gearman.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

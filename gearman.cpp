@@ -265,15 +265,10 @@ bool HHVM_METHOD(GearmanWorker, addServers, String& servers) {
 	return ret == GEARMAN_SUCCESS;
 }
 
-void* add_function_callback(gearman_job_st* job, void* context, size_t* result_size, gearman_return_t* ret) {
-	//Array params(PackedArrayInit(1).appendRef(callback->context).toArray());
-	//Array params = Array::Create();
-	//vm_call_user_func(cb->function, params);
-	//GearmanWorkerData* data = (GearmanWorkerData*) context;
+static void* add_function_callback(gearman_job_st* job, void* context, size_t* result_size, gearman_return_t* ret) {
+	Array params = Array::Create();
 	GearmanWorkerData::UserDefinedFunc* udf = (GearmanWorkerData::UserDefinedFunc*) context;
-	f_is_callable(udf->func);
-	//Array params = Array::Create();
-	//vm_call_user_func(callback->func, params);
+	vm_call_user_func(udf->func, params);
 	*result_size = 0;
 	return NULL;
 }
@@ -291,11 +286,9 @@ bool HHVM_METHOD(GearmanWorker, addFunction, const String& function_name,
 	}
 
 	auto udf = std::make_shared<GearmanWorkerData::UserDefinedFunc>();
-
-	gearman_return_t ret = gearman_worker_add_function(&data->m_impl->worker, function_name.data(), 
-									timeout, add_function_callback, udf.get());
-	
-	if (ret == GEARMAN_SUCCESS) {
+	if (gearman_worker_add_function(&data->m_impl->worker, function_name.data(), 
+									timeout, add_function_callback, 
+									(void*) udf.get()) == GEARMAN_SUCCESS) {
 		udf->func = function;
 		data->m_udfs.push_back(udf);
 		return true;
