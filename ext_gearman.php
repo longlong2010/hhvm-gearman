@@ -12,16 +12,16 @@ class GearmanClient {
 	public function addServers(string $servers = '127.0.0.1:4730'): bool;
 	
 	<<__Native>>
-	public function doNormal(string $function_name, string $workload, ?string $unique = null): string;
+	public function doNormal(string $function_name, string $workload, string $unique = ''): string;
 
 	<<__Native>>
-	public function doHigh(string $function_name, string $workload, ?string $unique = null): string;
+	public function doHigh(string $function_name, string $workload, string $unique = ''): string;
 	
 	<<__Native>>
-	public function doBackground(string $function_name, string $workload, ?string $unique = null): string;
+	public function doBackground(string $function_name, string $workload, string $unique = ''): string;
 	
 	<<__Native>>
-	public function doHighBackground(string $function_name, string $workload, ?string $unique = null): string;
+	public function doHighBackground(string $function_name, string $workload, string $unique = ''): string;
 
 	<<__Native>>
 	public function ping(string $workload): bool;

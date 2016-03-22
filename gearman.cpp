@@ -136,7 +136,7 @@ bool HHVM_METHOD(GearmanClient, addServers, const String& servers) {
 	const char* myFunctionName = function_name.empty() ? nullptr : function_name.c_str(); \
 	const char* myWorkload = workload.empty() ? nullptr : workload.c_str(); \
 	size_t workload_size = workload.length(); \
-	const char* myUnique = workload.empty() ? nullptr : unique.c_str(); \
+	const char* myUnique = unique.empty() ? NULL : unique.c_str(); \
 
 
 String HHVM_METHOD(GearmanClient, doNormal, const String& function_name,
@@ -197,6 +197,8 @@ String HHVM_METHOD(GearmanClient, doHighBackground, const String& function_name,
 	GEARMAN_CLIENT_DO(function_name, workload, unique);
 
 	gearman_job_handle_t handle;
+	printf("%s\n", myFunctionName);
+	return String();
 	gearman_return_t ret = gearman_client_do_high_background(&data->m_impl->client, 
 								myFunctionName, myUnique, 
 								myWorkload, workload_size, 

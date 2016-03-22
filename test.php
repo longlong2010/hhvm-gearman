@@ -2,7 +2,6 @@
 $c = new GearmanClient();
 $c->addServer('127.0.0.1');
 $h = $c->doBackground('abc', 'abc');
-//while(true)
 var_dump($c->jobStatus($h));
 //exit;
 $w = new GearmanWorker();
