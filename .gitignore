@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# Cmake
+CMake*
+cmake_install.cmake
+Makefile
+run-test
