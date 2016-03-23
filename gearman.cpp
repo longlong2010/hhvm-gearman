@@ -197,8 +197,7 @@ String HHVM_METHOD(GearmanClient, doHighBackground, const String& function_name,
 	GEARMAN_CLIENT_DO(function_name, workload, unique);
 
 	gearman_job_handle_t handle;
-	printf("%s\n", myFunctionName);
-	return String();
+
 	gearman_return_t ret = gearman_client_do_high_background(&data->m_impl->client, 
 								myFunctionName, myUnique, 
 								myWorkload, workload_size, 
@@ -267,7 +266,7 @@ bool HHVM_METHOD(GearmanWorker, addServers, const String& servers) {
 	return ret == GEARMAN_SUCCESS;
 }
 
-static void* add_function_callback(gearman_job_st* job, void* context, size_t* result_size, gearman_return_t* ret) {
+static void* php_gearman_function_callback(gearman_job_st* job, void* context, size_t* result_size, gearman_return_t* ret) {
 	Array params = Array::Create();
 	GearmanWorkerData::UserDefinedFunc* udf = (GearmanWorkerData::UserDefinedFunc*) context;
 	is_callable(udf->func);
@@ -290,8 +289,8 @@ bool HHVM_METHOD(GearmanWorker, addFunction, const String& function_name,
 
 	auto udf = std::make_shared<GearmanWorkerData::UserDefinedFunc>();
 	if (gearman_worker_add_function(&data->m_impl->worker, function_name.data(), 
-									timeout, add_function_callback, 
-									(void*) udf.get()) == GEARMAN_SUCCESS) {
+									timeout, php_gearman_function_callback, 
+									udf.get()) == GEARMAN_SUCCESS) {
 		udf->func = function;
 		data->m_udfs.push_back(udf);
 		return true;
