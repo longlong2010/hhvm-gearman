@@ -3,23 +3,10 @@ hhvm gearman extension
 
 ## Only client API is supported
 
-# build
-```bash
-hphpize
-cmake .
-make
-cp gearman.so /etc/hhvm/
-```
+# Installation
 
-
-# configure
-
-add this to your /etc/hhvm/php.ini
-
-```
-extension_dir = /etc/hhvm
-hhvm.extensions[gearman] = gearman.so
-
-```
-
+1. `$ ./build.sh`
+2. `$ sudo cp gearman.so /usr/lib64/hhvm/extensions
+3.  $ echo 'hhvm.extensions[gearman] = gearman.so' | tee -a /etc/hhvm/server.ini
+4. Restart HHVM.
 
